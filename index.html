@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thread Stripping Force Calculator</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; color: #1a1a1a; padding: 24px; }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 22px; font-weight: 800; color: #1a1a1a; margin-bottom: 4px; }
+  .subtitle { color: #666; font-size: 13px; margin-bottom: 20px; }
+  .badge { display: inline-block; background: #FFD700; color: #1a1a1a; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 3px; margin-left: 8px; vertical-align: middle; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .card h2 { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #FFD700; }
+  .form-row { display: flex; align-items: center; margin-bottom: 10px; gap: 8px; }
+  .form-row label { flex: 0 0 180px; font-size: 12px; color: #444; font-weight: 500; }
+  .form-row input, .form-row select { flex: 1; padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; background: #fafafa; }
+  .form-row input:focus, .form-row select:focus { outline: none; border-color: #FFD700; box-shadow: 0 0 0 2px rgba(255,215,0,0.2); }
+  .form-row .unit { flex: 0 0 36px; font-size: 11px; color: #888; }
+  .btn { background: #1a1a1a; color: #FFD700; border: none; padding: 10px 28px; border-radius: 5px; font-size: 13px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 6px; letter-spacing: 0.5px; }
+  .btn:hover { background: #333; }
+  .results { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .results h2 { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #FFD700; }
+  .result-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  .result-item { background: #f9f9f9; border-radius: 6px; padding: 14px; text-align: center; border-left: 3px solid #FFD700; }
+  .result-item .value { font-size: 24px; font-weight: 800; color: #1a1a1a; }
+  .result-item .label { font-size: 10px; color: #666; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .result-item.highlight { background: #fffbe6; border-left-color: #FFD700; }
+  .result-item.warning { background: #fff5f5; border-left-color: #e53e3e; }
+  .result-item.safe { background: #f0fff4; border-left-color: #38a169; }
+  .notes { font-size: 11px; color: #888; line-height: 1.5; padding-top: 10px; border-top: 1px solid #eee; }
+  .notes strong { color: #555; }
+  .diagram { background: #f9f9f9; border-radius: 6px; padding: 14px; margin-top: 12px; }
+  .diagram-title { font-size: 11px; font-weight: 600; color: #666; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .bar-container { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .bar-label { font-size: 11px; color: #444; flex: 0 0 120px; text-align: right; }
+  .bar-track { flex: 1; height: 22px; background: #eee; border-radius: 4px; overflow: hidden; position: relative; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+  .bar-value { font-size: 11px; font-weight: 600; color: #444; flex: 0 0 70px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Thread Stripping Force Calculator <span class="badge">BUILT WITH AI</span></h1>
+  <p class="subtitle">Estimates internal and external thread stripping strength per FED-STD-H28 methodology</p>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Thread Geometry</h2>
+      <div class="form-row">
+        <label>Thread Size</label>
+        <select id="threadSize" onchange="autoFill()">
+          <option value="custom">Custom</option>
+          <option value="M3x0.5">M3 x 0.5</option>
+          <option value="M4x0.7">M4 x 0.7</option>
+          <option value="M5x0.8">M5 x 0.8</option>
+          <option value="M6x1.0" selected>M6 x 1.0</option>
+          <option value="M8x1.25">M8 x 1.25</option>
+          <option value="M10x1.5">M10 x 1.5</option>
+          <option value="M12x1.75">M12 x 1.75</option>
+          <option value="6-32">6-32 UNC</option>
+          <option value="8-32">8-32 UNC</option>
+          <option value="10-24">10-24 UNC</option>
+          <option value="1/4-20">1/4-20 UNC</option>
+          <option value="5/16-18">5/16-18 UNC</option>
+          <option value="3/8-16">3/8-16 UNC</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Major Diameter (D)</label>
+        <input type="number" id="majorDia" value="6.0" step="0.01">
+        <span class="unit">mm</span>
+      </div>
+      <div class="form-row">
+        <label>Pitch (P)</label>
+        <input type="number" id="pitch" value="1.0" step="0.01">
+        <span class="unit">mm</span>
+      </div>
+      <div class="form-row">
+        <label>Engagement Length (Le)</label>
+        <input type="number" id="engLength" value="6.0" step="0.1">
+        <span class="unit">mm</span>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Material Properties</h2>
+      <div class="form-row">
+        <label>Bolt Material</label>
+        <select id="boltMat" onchange="updateBoltUts()">
+          <option value="custom">Custom</option>
+          <option value="800">Class 8.8 Steel (800 MPa)</option>
+          <option value="1040" selected>Class 10.9 Steel (1040 MPa)</option>
+          <option value="1220">Class 12.9 Steel (1220 MPa)</option>
+          <option value="515">304 Stainless (515 MPa)</option>
+          <option value="860">A286 (860 MPa)</option>
+          <option value="310">6061-T6 Aluminum (310 MPa)</option>
+          <option value="900">Ti-6Al-4V (900 MPa)</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Bolt UTS</label>
+        <input type="number" id="boltUts" value="1040" step="1">
+        <span class="unit">MPa</span>
+      </div>
+      <div class="form-row">
+        <label>Nut / Boss Material</label>
+        <select id="nutMat" onchange="updateNutUts()">
+          <option value="custom">Custom</option>
+          <option value="800">Class 8 Steel (800 MPa)</option>
+          <option value="310">6061-T6 Aluminum (310 MPa)</option>
+          <option value="515">304 Stainless (515 MPa)</option>
+          <option value="55" selected>PC/ABS Plastic (55 MPa)</option>
+          <option value="80">Glass-filled Nylon (80 MPa)</option>
+          <option value="165">AZ91D Magnesium (165 MPa)</option>
+          <option value="320">Zinc die cast (320 MPa)</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Nut / Boss UTS</label>
+        <input type="number" id="nutUts" value="55" step="1">
+        <span class="unit">MPa</span>
+      </div>
+      <div class="form-row">
+        <label>Safety Factor</label>
+        <input type="number" id="sf" value="2.0" step="0.1">
+        <span class="unit"></span>
+      </div>
+      <button class="btn" onclick="calculate()">CALCULATE STRIPPING FORCE</button>
+    </div>
+  </div>
+
+  <div class="results" id="resultsPanel">
+    <h2>Results</h2>
+    <div class="result-grid">
+      <div class="result-item highlight" id="extStrip">
+        <div class="value">—</div>
+        <div class="label">External Thread Strip (N)</div>
+      </div>
+      <div class="result-item highlight" id="intStrip">
+        <div class="value">—</div>
+        <div class="label">Internal Thread Strip (N)</div>
+      </div>
+      <div class="result-item" id="failMode">
+        <div class="value">—</div>
+        <div class="label">Failure Mode</div>
+      </div>
+      <div class="result-item" id="boltTensile">
+        <div class="value">—</div>
+        <div class="label">Bolt Tensile Strength (N)</div>
+      </div>
+      <div class="result-item" id="allowable">
+        <div class="value">—</div>
+        <div class="label">Allowable Load (N)</div>
+      </div>
+      <div class="result-item" id="leRatio">
+        <div class="value">—</div>
+        <div class="label">Le / D Ratio</div>
+      </div>
+    </div>
+    <div class="diagram">
+      <div class="diagram-title">Strength Comparison</div>
+      <div class="bar-container">
+        <span class="bar-label">Ext. Thread Strip</span>
+        <div class="bar-track"><div class="bar-fill" id="barExt" style="width:0%;background:#FFD700"></div></div>
+        <span class="bar-value" id="barExtVal">—</span>
+      </div>
+      <div class="bar-container">
+        <span class="bar-label">Int. Thread Strip</span>
+        <div class="bar-track"><div class="bar-fill" id="barInt" style="width:0%;background:#f6a821"></div></div>
+        <span class="bar-value" id="barIntVal">—</span>
+      </div>
+      <div class="bar-container">
+        <span class="bar-label">Bolt Tensile</span>
+        <div class="bar-track"><div class="bar-fill" id="barBolt" style="width:0%;background:#1a1a1a"></div></div>
+        <span class="bar-value" id="barBoltVal">—</span>
+      </div>
+    </div>
+    <div class="notes" style="margin-top:14px;">
+      <strong>Note:</strong> This is an estimation tool based on simplified FED-STD-H28 shear area calculations. Assumes 60° thread form. Actual stripping loads depend on thread tolerance class, surface finish, lubrication, loading rate, and temperature. Always validate critical calculations with FEA or physical testing.
+    </div>
+  </div>
+</div>
+
+<script>
+const threadData = {
+  "M3x0.5":   { d: 3.0,   p: 0.5 },
+  "M4x0.7":   { d: 4.0,   p: 0.7 },
+  "M5x0.8":   { d: 5.0,   p: 0.8 },
+  "M6x1.0":   { d: 6.0,   p: 1.0 },
+  "M8x1.25":  { d: 8.0,   p: 1.25 },
+  "M10x1.5":  { d: 10.0,  p: 1.5 },
+  "M12x1.75": { d: 12.0,  p: 1.75 },
+  "6-32":     { d: 3.505, p: 0.794 },
+  "8-32":     { d: 4.166, p: 0.794 },
+  "10-24":    { d: 4.826, p: 1.058 },
+  "1/4-20":   { d: 6.35,  p: 1.27 },
+  "5/16-18":  { d: 7.938, p: 1.411 },
+  "3/8-16":   { d: 9.525, p: 1.588 },
+};
+
+function autoFill() {
+  const sel = document.getElementById("threadSize").value;
+  if (threadData[sel]) {
+    document.getElementById("majorDia").value = threadData[sel].d;
+    document.getElementById("pitch").value = threadData[sel].p;
+    document.getElementById("engLength").value = (threadData[sel].d * 1.0).toFixed(1);
+  }
+}
+
+function updateBoltUts() {
+  const v = document.getElementById("boltMat").value;
+  if (v !== "custom") document.getElementById("boltUts").value = v;
+}
+function updateNutUts() {
+  const v = document.getElementById("nutMat").value;
+  if (v !== "custom") document.getElementById("nutUts").value = v;
+}
+
+function calculate() {
+  const D = parseFloat(document.getElementById("majorDia").value);
+  const P = parseFloat(document.getElementById("pitch").value);
+  const Le = parseFloat(document.getElementById("engLength").value);
+  const boltUts = parseFloat(document.getElementById("boltUts").value);
+  const nutUts = parseFloat(document.getElementById("nutUts").value);
+  const sf = parseFloat(document.getElementById("sf").value);
+
+  const H = P * Math.sqrt(3) / 2;
+  const d2 = D - 0.6495 * P;
+  const d1 = D - 1.0825 * P;
+  const D1 = D - 1.0825 * P;
+
+  const n = Le / P;
+  const Ase = Math.PI * n * D1 * (P/2 + (d2 - D1) * Math.tan(30 * Math.PI / 180) / Math.sqrt(3));
+  const Asi = Math.PI * n * D * (P/2 + (D - d2) * Math.tan(30 * Math.PI / 180) / Math.sqrt(3));
+
+  const extStripForce = Ase * boltUts * 0.577;
+  const intStripForce = Asi * nutUts * 0.577;
+
+  const At = Math.PI / 4 * ((d2 + d1) / 2) ** 2;
+  const boltTensileForce = At * boltUts;
+
+  const minStrip = Math.min(extStripForce, intStripForce);
+  let failMode, failClass;
+  if (minStrip > boltTensileForce) {
+    failMode = "Bolt Fracture";
+    failClass = "safe";
+  } else if (intStripForce < extStripForce) {
+    failMode = "Int. Thread Strip";
+    failClass = "warning";
+  } else {
+    failMode = "Ext. Thread Strip";
+    failClass = "warning";
+  }
+
+  const allowableLoad = minStrip / sf;
+
+  document.querySelector("#extStrip .value").textContent = Math.round(extStripForce).toLocaleString();
+  document.querySelector("#intStrip .value").textContent = Math.round(intStripForce).toLocaleString();
+  document.querySelector("#failMode .value").textContent = failMode;
+  document.getElementById("failMode").className = "result-item " + failClass;
+  document.querySelector("#boltTensile .value").textContent = Math.round(boltTensileForce).toLocaleString();
+  document.querySelector("#allowable .value").textContent = Math.round(allowableLoad).toLocaleString();
+  document.querySelector("#leRatio .value").textContent = (Le / D).toFixed(2) + "x";
+
+  const maxVal = Math.max(extStripForce, intStripForce, boltTensileForce);
+  document.getElementById("barExt").style.width = (extStripForce / maxVal * 100) + "%";
+  document.getElementById("barInt").style.width = (intStripForce / maxVal * 100) + "%";
+  document.getElementById("barBolt").style.width = (boltTensileForce / maxVal * 100) + "%";
+  document.getElementById("barExtVal").textContent = Math.round(extStripForce).toLocaleString() + " N";
+  document.getElementById("barIntVal").textContent = Math.round(intStripForce).toLocaleString() + " N";
+  document.getElementById("barBoltVal").textContent = Math.round(boltTensileForce).toLocaleString() + " N";
+}
+
+autoFill();
+calculate();
+</script>
+</body>
+</html>
