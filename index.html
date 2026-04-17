@@ -39,6 +39,8 @@
   .bar-track { flex: 1; height: 22px; background: #eee; border-radius: 4px; overflow: hidden; position: relative; }
   .bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
   .bar-value { font-size: 11px; font-weight: 600; color: #444; flex: 0 0 70px; }
+  select optgroup { font-weight: 700; font-size: 12px; color: #333; }
+  select option { font-weight: 400; }
 </style>
 </head>
 <body>
@@ -53,19 +55,77 @@
         <label>Thread Size</label>
         <select id="threadSize" onchange="autoFill()">
           <option value="custom">Custom</option>
-          <option value="M3x0.5">M3 x 0.5</option>
-          <option value="M4x0.7">M4 x 0.7</option>
-          <option value="M5x0.8">M5 x 0.8</option>
-          <option value="M6x1.0" selected>M6 x 1.0</option>
-          <option value="M8x1.25">M8 x 1.25</option>
-          <option value="M10x1.5">M10 x 1.5</option>
-          <option value="M12x1.75">M12 x 1.75</option>
-          <option value="6-32">6-32 UNC</option>
-          <option value="8-32">8-32 UNC</option>
-          <option value="10-24">10-24 UNC</option>
-          <option value="1/4-20">1/4-20 UNC</option>
-          <option value="5/16-18">5/16-18 UNC</option>
-          <option value="3/8-16">3/8-16 UNC</option>
+          <optgroup label="Metric Coarse (ISO 261)">
+            <option value="M0.8x0.2">M0.8 x 0.2</option>
+            <option value="M1x0.25">M1 x 0.25</option>
+            <option value="M1.2x0.25">M1.2 x 0.25</option>
+            <option value="M1.4x0.3">M1.4 x 0.3</option>
+            <option value="M1.6x0.35">M1.6 x 0.35</option>
+            <option value="M1.8x0.35">M1.8 x 0.35</option>
+            <option value="M2x0.4">M2 x 0.4</option>
+            <option value="M2.5x0.45">M2.5 x 0.45</option>
+            <option value="M3x0.5">M3 x 0.5</option>
+            <option value="M4x0.7">M4 x 0.7</option>
+            <option value="M5x0.8">M5 x 0.8</option>
+            <option value="M6x1.0" selected>M6 x 1.0</option>
+            <option value="M8x1.25">M8 x 1.25</option>
+            <option value="M10x1.5">M10 x 1.5</option>
+            <option value="M12x1.75">M12 x 1.75</option>
+            <option value="M14x2.0">M14 x 2.0</option>
+            <option value="M16x2.0">M16 x 2.0</option>
+            <option value="M20x2.5">M20 x 2.5</option>
+            <option value="M24x3.0">M24 x 3.0</option>
+            <option value="M30x3.5">M30 x 3.5</option>
+          </optgroup>
+          <optgroup label="Metric Fine (ISO 261)">
+            <option value="M6x0.75">M6 x 0.75 Fine</option>
+            <option value="M8x1.0">M8 x 1.0 Fine</option>
+            <option value="M10x1.25">M10 x 1.25 Fine</option>
+            <option value="M12x1.25">M12 x 1.25 Fine</option>
+            <option value="M14x1.5">M14 x 1.5 Fine</option>
+            <option value="M16x1.5">M16 x 1.5 Fine</option>
+            <option value="M20x1.5">M20 x 1.5 Fine</option>
+          </optgroup>
+          <optgroup label="Self-Tapping (ISO 1478 / DIN 7970)">
+            <option value="ST2.2">ST2.2 x 0.8</option>
+            <option value="ST2.9">ST2.9 x 1.1</option>
+            <option value="ST3.5">ST3.5 x 1.3</option>
+            <option value="ST3.9">ST3.9 x 1.3</option>
+            <option value="ST4.2">ST4.2 x 1.4</option>
+            <option value="ST4.8">ST4.8 x 1.6</option>
+            <option value="ST5.5">ST5.5 x 1.8</option>
+            <option value="ST6.3">ST6.3 x 1.8</option>
+          </optgroup>
+          <optgroup label="Thread-Forming for Plastics">
+            <option value="TF-M2">TF ~M2 (2.2 x 0.9)</option>
+            <option value="TF-M2.5">TF ~M2.5 (2.8 x 1.0)</option>
+            <option value="TF-M3">TF ~M3 (3.3 x 1.3)</option>
+            <option value="TF-M4">TF ~M4 (4.4 x 1.8)</option>
+            <option value="TF-M5">TF ~M5 (5.3 x 2.0)</option>
+            <option value="TF-M6">TF ~M6 (6.5 x 2.3)</option>
+          </optgroup>
+          <optgroup label="Unified Coarse (ASME B1.1)">
+            <option value="4-40">4-40 UNC</option>
+            <option value="6-32">6-32 UNC</option>
+            <option value="8-32">8-32 UNC</option>
+            <option value="10-24">10-24 UNC</option>
+            <option value="1/4-20">1/4-20 UNC</option>
+            <option value="5/16-18">5/16-18 UNC</option>
+            <option value="3/8-16">3/8-16 UNC</option>
+            <option value="1/2-13">1/2-13 UNC</option>
+            <option value="5/8-11">5/8-11 UNC</option>
+            <option value="3/4-10">3/4-10 UNC</option>
+            <option value="7/8-9">7/8-9 UNC</option>
+            <option value="1-8">1&#8209;8 UNC</option>
+          </optgroup>
+          <optgroup label="Unified Fine (ASME B1.1)">
+            <option value="1/4-28">1/4-28 UNF</option>
+            <option value="5/16-24">5/16-24 UNF</option>
+            <option value="3/8-24">3/8-24 UNF</option>
+            <option value="1/2-20">1/2-20 UNF</option>
+            <option value="5/8-18">5/8-18 UNF</option>
+            <option value="3/4-16">3/4-16 UNF</option>
+          </optgroup>
         </select>
       </div>
       <div class="form-row">
@@ -87,20 +147,49 @@
     <div class="card">
       <h2>Material Properties</h2>
       <div class="form-row">
-        <label>Bolt Material</label>
+        <label>Bolt / Screw Material</label>
         <select id="boltMat" onchange="updateBoltUts()">
           <option value="custom">Custom</option>
-          <option value="800">Class 8.8 Steel (800 MPa)</option>
-          <option value="1040" selected>Class 10.9 Steel (1040 MPa)</option>
-          <option value="1220">Class 12.9 Steel (1220 MPa)</option>
-          <option value="515">304 Stainless (515 MPa)</option>
-          <option value="860">A286 (860 MPa)</option>
-          <option value="310">6061-T6 Aluminum (310 MPa)</option>
-          <option value="900">Ti-6Al-4V (900 MPa)</option>
+          <optgroup label="Metric Class (ISO 898-1)">
+            <option value="400">Class 4.6 Steel (400 MPa)</option>
+            <option value="520">Class 5.8 Steel (520 MPa)</option>
+            <option value="800">Class 8.8 Steel (800 MPa)</option>
+            <option value="1040" selected>Class 10.9 Steel (1040 MPa)</option>
+            <option value="1220">Class 12.9 Steel (1220 MPa)</option>
+          </optgroup>
+          <optgroup label="SAE Grade (J429)">
+            <option value="510">Grade 2 Steel (510 MPa)</option>
+            <option value="827">Grade 5 Steel (827 MPa)</option>
+            <option value="1034">Grade 8 Steel (1034 MPa)</option>
+          </optgroup>
+          <optgroup label="Stainless Steel">
+            <option value="515-304ss">304 Stainless (515 MPa)</option>
+            <option value="515-316ss">316 Stainless (515 MPa)</option>
+            <option value="1070">17-4 PH SS H1025 (1070 MPa)</option>
+          </optgroup>
+          <optgroup label="High-Performance Alloys">
+            <option value="860">A286 Superalloy (860 MPa)</option>
+            <option value="1240">Inconel 718 (1240 MPa)</option>
+            <option value="900">Ti-6Al-4V (900 MPa)</option>
+            <option value="550">Monel 400 (550 MPa)</option>
+          </optgroup>
+          <optgroup label="Non-Ferrous Metals">
+            <option value="310-6061">6061-T6 Aluminum (310 MPa)</option>
+            <option value="572">7075-T6 Aluminum (572 MPa)</option>
+            <option value="385-brass">C360 Brass (385 MPa)</option>
+            <option value="490">Silicon Bronze (490 MPa)</option>
+          </optgroup>
+          <optgroup label="Plastics / Composites">
+            <option value="75-pa66">Nylon PA66 (75 MPa)</option>
+            <option value="130-pa66gf">PA66-GF30 Glass-filled (130 MPa)</option>
+            <option value="68-pom">POM / Delrin Acetal (68 MPa)</option>
+            <option value="100-peek">PEEK (100 MPa)</option>
+            <option value="62-pc">Polycarbonate PC (62 MPa)</option>
+          </optgroup>
         </select>
       </div>
       <div class="form-row">
-        <label>Bolt UTS</label>
+        <label>Bolt / Screw UTS</label>
         <input type="number" id="boltUts" value="1040" step="1">
         <span class="unit">MPa</span>
       </div>
@@ -108,13 +197,46 @@
         <label>Nut / Boss Material</label>
         <select id="nutMat" onchange="updateNutUts()">
           <option value="custom">Custom</option>
-          <option value="800">Class 8 Steel (800 MPa)</option>
-          <option value="310">6061-T6 Aluminum (310 MPa)</option>
-          <option value="515">304 Stainless (515 MPa)</option>
-          <option value="55" selected>PC/ABS Plastic (55 MPa)</option>
-          <option value="80">Glass-filled Nylon (80 MPa)</option>
-          <option value="165">AZ91D Magnesium (165 MPa)</option>
-          <option value="320">Zinc die cast (320 MPa)</option>
+          <optgroup label="Steel">
+            <option value="800">Class 8 Steel (800 MPa)</option>
+            <option value="1040-cl10">Class 10 Steel (1040 MPa)</option>
+          </optgroup>
+          <optgroup label="Stainless Steel">
+            <option value="515-304ss">304 Stainless (515 MPa)</option>
+            <option value="515-316ss">316 Stainless (515 MPa)</option>
+          </optgroup>
+          <optgroup label="Aluminum">
+            <option value="310-6061">6061-T6 Aluminum (310 MPa)</option>
+            <option value="572-7075">7075-T6 Aluminum (572 MPa)</option>
+            <option value="262">A356-T6 Cast Aluminum (262 MPa)</option>
+          </optgroup>
+          <optgroup label="Cast Metals">
+            <option value="210">Gray Cast Iron Cl.30 (210 MPa)</option>
+            <option value="414">Ductile Iron 60-40-18 (414 MPa)</option>
+            <option value="165">AZ91D Magnesium (165 MPa)</option>
+            <option value="320">Zinc Die Cast ZA-3 (320 MPa)</option>
+            <option value="385-brass">C360 Brass (385 MPa)</option>
+          </optgroup>
+          <optgroup label="Plastics &mdash; Unfilled">
+            <option value="42-abs">ABS (42 MPa)</option>
+            <option value="62-pc">Polycarbonate PC (62 MPa)</option>
+            <option value="55" selected>PC/ABS Blend (55 MPa)</option>
+            <option value="75-pa66">Nylon PA66 (75 MPa)</option>
+            <option value="68-pom">POM / Delrin Acetal (68 MPa)</option>
+            <option value="100-peek">PEEK (100 MPa)</option>
+            <option value="52-pbt">PBT Polyester (52 MPa)</option>
+            <option value="55-noryl">PPO/PPE Noryl (55 MPa)</option>
+            <option value="85-ultem">Ultem PEI (85 MPa)</option>
+            <option value="48-asa">ASA (48 MPa)</option>
+            <option value="35-pp">Polypropylene PP (35 MPa)</option>
+            <option value="28-hdpe">HDPE (28 MPa)</option>
+          </optgroup>
+          <optgroup label="Plastics &mdash; Glass-Filled">
+            <option value="80-pa66gf30n">Glass-filled Nylon PA66-GF30 (80 MPa)</option>
+            <option value="130-pa66gf30b">PA66-GF30 Boss Grade (130 MPa)</option>
+            <option value="130-pbtgf30">PBT-GF30 (130 MPa)</option>
+            <option value="145-pcgf30">PC-GF30 (145 MPa)</option>
+          </optgroup>
         </select>
       </div>
       <div class="form-row">
@@ -135,27 +257,27 @@
     <h2>Results</h2>
     <div class="result-grid">
       <div class="result-item highlight" id="extStrip">
-        <div class="value">—</div>
+        <div class="value">&mdash;</div>
         <div class="label">External Thread Strip (N)</div>
       </div>
       <div class="result-item highlight" id="intStrip">
-        <div class="value">—</div>
+        <div class="value">&mdash;</div>
         <div class="label">Internal Thread Strip (N)</div>
       </div>
       <div class="result-item" id="failMode">
-        <div class="value">—</div>
+        <div class="value">&mdash;</div>
         <div class="label">Failure Mode</div>
       </div>
       <div class="result-item" id="boltTensile">
-        <div class="value">—</div>
+        <div class="value">&mdash;</div>
         <div class="label">Bolt Tensile Strength (N)</div>
       </div>
       <div class="result-item" id="allowable">
-        <div class="value">—</div>
+        <div class="value">&mdash;</div>
         <div class="label">Allowable Load (N)</div>
       </div>
       <div class="result-item" id="leRatio">
-        <div class="value">—</div>
+        <div class="value">&mdash;</div>
         <div class="label">Le / D Ratio</div>
       </div>
     </div>
@@ -164,40 +286,93 @@
       <div class="bar-container">
         <span class="bar-label">Ext. Thread Strip</span>
         <div class="bar-track"><div class="bar-fill" id="barExt" style="width:0%;background:#FFD700"></div></div>
-        <span class="bar-value" id="barExtVal">—</span>
+        <span class="bar-value" id="barExtVal">&mdash;</span>
       </div>
       <div class="bar-container">
         <span class="bar-label">Int. Thread Strip</span>
         <div class="bar-track"><div class="bar-fill" id="barInt" style="width:0%;background:#f6a821"></div></div>
-        <span class="bar-value" id="barIntVal">—</span>
+        <span class="bar-value" id="barIntVal">&mdash;</span>
       </div>
       <div class="bar-container">
         <span class="bar-label">Bolt Tensile</span>
         <div class="bar-track"><div class="bar-fill" id="barBolt" style="width:0%;background:#1a1a1a"></div></div>
-        <span class="bar-value" id="barBoltVal">—</span>
+        <span class="bar-value" id="barBoltVal">&mdash;</span>
       </div>
     </div>
     <div class="notes" style="margin-top:14px;">
-      <strong>Note:</strong> This is an estimation tool based on simplified FED-STD-H28 shear area calculations. Assumes 60° thread form. Actual stripping loads depend on thread tolerance class, surface finish, lubrication, loading rate, and temperature. Always validate critical calculations with FEA or physical testing.
+      <strong>Note:</strong> This is an estimation tool based on simplified FED-STD-H28 shear area calculations. Assumes 60&deg; thread form. Self-tapping and thread-forming screw results are approximate &mdash; actual thread profiles are asymmetric (30&deg;/45&deg;) and stripping behavior in plastics depends on boss geometry, wall thickness, and forming conditions. Always validate critical calculations with FEA or physical testing.
     </div>
   </div>
 </div>
 
 <script>
 const threadData = {
-  "M3x0.5":   { d: 3.0,   p: 0.5 },
-  "M4x0.7":   { d: 4.0,   p: 0.7 },
-  "M5x0.8":   { d: 5.0,   p: 0.8 },
-  "M6x1.0":   { d: 6.0,   p: 1.0 },
-  "M8x1.25":  { d: 8.0,   p: 1.25 },
-  "M10x1.5":  { d: 10.0,  p: 1.5 },
-  "M12x1.75": { d: 12.0,  p: 1.75 },
-  "6-32":     { d: 3.505, p: 0.794 },
-  "8-32":     { d: 4.166, p: 0.794 },
-  "10-24":    { d: 4.826, p: 1.058 },
-  "1/4-20":   { d: 6.35,  p: 1.27 },
-  "5/16-18":  { d: 7.938, p: 1.411 },
-  "3/8-16":   { d: 9.525, p: 1.588 },
+  // Metric Coarse (ISO 261) â D in mm, P in mm
+  "M0.8x0.2":  { d: 0.8,   p: 0.2 },
+  "M1x0.25":   { d: 1.0,   p: 0.25 },
+  "M1.2x0.25": { d: 1.2,   p: 0.25 },
+  "M1.4x0.3":  { d: 1.4,   p: 0.3 },
+  "M1.6x0.35": { d: 1.6,   p: 0.35 },
+  "M1.8x0.35": { d: 1.8,   p: 0.35 },
+  "M2x0.4":    { d: 2.0,   p: 0.4 },
+  "M2.5x0.45": { d: 2.5,   p: 0.45 },
+  "M3x0.5":    { d: 3.0,   p: 0.5 },
+  "M4x0.7":    { d: 4.0,   p: 0.7 },
+  "M5x0.8":    { d: 5.0,   p: 0.8 },
+  "M6x1.0":    { d: 6.0,   p: 1.0 },
+  "M8x1.25":   { d: 8.0,   p: 1.25 },
+  "M10x1.5":   { d: 10.0,  p: 1.5 },
+  "M12x1.75":  { d: 12.0,  p: 1.75 },
+  "M14x2.0":   { d: 14.0,  p: 2.0 },
+  "M16x2.0":   { d: 16.0,  p: 2.0 },
+  "M20x2.5":   { d: 20.0,  p: 2.5 },
+  "M24x3.0":   { d: 24.0,  p: 3.0 },
+  "M30x3.5":   { d: 30.0,  p: 3.5 },
+  // Metric Fine (ISO 261)
+  "M6x0.75":   { d: 6.0,   p: 0.75 },
+  "M8x1.0":    { d: 8.0,   p: 1.0 },
+  "M10x1.25":  { d: 10.0,  p: 1.25 },
+  "M12x1.25":  { d: 12.0,  p: 1.25 },
+  "M14x1.5":   { d: 14.0,  p: 1.5 },
+  "M16x1.5":   { d: 16.0,  p: 1.5 },
+  "M20x1.5":   { d: 20.0,  p: 1.5 },
+  // Self-Tapping Screws (ISO 1478 / DIN 7970)
+  "ST2.2":     { d: 2.2,   p: 0.8 },
+  "ST2.9":     { d: 2.9,   p: 1.1 },
+  "ST3.5":     { d: 3.5,   p: 1.3 },
+  "ST3.9":     { d: 3.9,   p: 1.3 },
+  "ST4.2":     { d: 4.2,   p: 1.4 },
+  "ST4.8":     { d: 4.8,   p: 1.6 },
+  "ST5.5":     { d: 5.5,   p: 1.8 },
+  "ST6.3":     { d: 6.3,   p: 1.8 },
+  // Thread-Forming for Plastics (Plastite/Remform/Delta PT style)
+  // 60Â° approximation â actual profiles are asymmetric
+  "TF-M2":     { d: 2.2,   p: 0.9 },
+  "TF-M2.5":   { d: 2.8,   p: 1.0 },
+  "TF-M3":     { d: 3.3,   p: 1.3 },
+  "TF-M4":     { d: 4.4,   p: 1.8 },
+  "TF-M5":     { d: 5.3,   p: 2.0 },
+  "TF-M6":     { d: 6.5,   p: 2.3 },
+  // Unified Coarse UNC (ASME B1.1) â converted to mm
+  "4-40":      { d: 2.845, p: 0.635 },
+  "6-32":      { d: 3.505, p: 0.794 },
+  "8-32":      { d: 4.166, p: 0.794 },
+  "10-24":     { d: 4.826, p: 1.058 },
+  "1/4-20":    { d: 6.350, p: 1.270 },
+  "5/16-18":   { d: 7.938, p: 1.411 },
+  "3/8-16":    { d: 9.525, p: 1.588 },
+  "1/2-13":    { d: 12.700, p: 1.954 },
+  "5/8-11":    { d: 15.875, p: 2.309 },
+  "3/4-10":    { d: 19.050, p: 2.540 },
+  "7/8-9":     { d: 22.225, p: 2.822 },
+  "1-8":       { d: 25.400, p: 3.175 },
+  // Unified Fine UNF (ASME B1.1) â converted to mm
+  "1/4-28":    { d: 6.350, p: 0.907 },
+  "5/16-24":   { d: 7.938, p: 1.058 },
+  "3/8-24":    { d: 9.525, p: 1.058 },
+  "1/2-20":    { d: 12.700, p: 1.270 },
+  "5/8-18":    { d: 15.875, p: 1.411 },
+  "3/4-16":    { d: 19.050, p: 1.588 },
 };
 
 function autoFill() {
@@ -211,11 +386,17 @@ function autoFill() {
 
 function updateBoltUts() {
   const v = document.getElementById("boltMat").value;
-  if (v !== "custom") document.getElementById("boltUts").value = v;
+  if (v !== "custom") {
+    const uts = parseInt(v.split("-")[0], 10);
+    document.getElementById("boltUts").value = uts;
+  }
 }
 function updateNutUts() {
   const v = document.getElementById("nutMat").value;
-  if (v !== "custom") document.getElementById("nutUts").value = v;
+  if (v !== "custom") {
+    const uts = parseInt(v.split("-")[0], 10);
+    document.getElementById("nutUts").value = uts;
+  }
 }
 
 function calculate() {
@@ -226,21 +407,34 @@ function calculate() {
   const nutUts = parseFloat(document.getElementById("nutUts").value);
   const sf = parseFloat(document.getElementById("sf").value);
 
-  const H = P * Math.sqrt(3) / 2;
-  const d2 = D - 0.6495 * P;
-  const d1 = D - 1.0825 * P;
-  const D1 = D - 1.0825 * P;
+  if (isNaN(D) || isNaN(P) || isNaN(Le) || isNaN(boltUts) || isNaN(nutUts) || isNaN(sf) ||
+      D <= 0 || P <= 0 || Le <= 0 || boltUts <= 0 || nutUts <= 0 || sf <= 0) {
+    alert("All inputs must be positive numbers.");
+    return;
+  }
 
-  const n = Le / P;
+  // Thread geometry (60Â° thread form)
+  const H = P * Math.sqrt(3) / 2;
+  const d2 = D - 0.6495 * P;  // pitch diameter
+  const d1 = D - 1.0825 * P;  // minor diameter
+  const D1 = D - 1.0825 * P;  // internal minor diameter (basic)
+
+  // Shear areas per FED-STD-H28
+  const n = Le / P; // number of threads engaged
+  // External thread shear area (bolt strips out of nut)
   const Ase = Math.PI * n * D1 * (P/2 + (d2 - D1) * Math.tan(30 * Math.PI / 180) / Math.sqrt(3));
+  // Internal thread shear area (nut strips)
   const Asi = Math.PI * n * D * (P/2 + (D - d2) * Math.tan(30 * Math.PI / 180) / Math.sqrt(3));
 
+  // Stripping forces (using shear strength = 0.577 x UTS, von Mises criterion)
   const extStripForce = Ase * boltUts * 0.577;
   const intStripForce = Asi * nutUts * 0.577;
 
-  const At = Math.PI / 4 * ((d2 + d1) / 2) ** 2;
+  // Bolt tensile strength
+  const At = Math.PI / 4 * ((d2 + d1) / 2) ** 2; // tensile stress area
   const boltTensileForce = At * boltUts;
 
+  // Determine failure mode
   const minStrip = Math.min(extStripForce, intStripForce);
   let failMode, failClass;
   if (minStrip > boltTensileForce) {
@@ -256,6 +450,7 @@ function calculate() {
 
   const allowableLoad = minStrip / sf;
 
+  // Update results
   document.querySelector("#extStrip .value").textContent = Math.round(extStripForce).toLocaleString();
   document.querySelector("#intStrip .value").textContent = Math.round(intStripForce).toLocaleString();
   document.querySelector("#failMode .value").textContent = failMode;
@@ -264,6 +459,7 @@ function calculate() {
   document.querySelector("#allowable .value").textContent = Math.round(allowableLoad).toLocaleString();
   document.querySelector("#leRatio .value").textContent = (Le / D).toFixed(2) + "x";
 
+  // Update bars
   const maxVal = Math.max(extStripForce, intStripForce, boltTensileForce);
   document.getElementById("barExt").style.width = (extStripForce / maxVal * 100) + "%";
   document.getElementById("barInt").style.width = (intStripForce / maxVal * 100) + "%";
@@ -273,6 +469,7 @@ function calculate() {
   document.getElementById("barBoltVal").textContent = Math.round(boltTensileForce).toLocaleString() + " N";
 }
 
+// Run on load
 autoFill();
 calculate();
 </script>
